@@ -24,6 +24,9 @@ class Card:
         
         return "----> Suit: {}, Rank: {}, Value: {}".format(self.suit, self.rank, self.value)
     
+    def __repr__(self):
+        return f"Card({self.suit, self.rank})"
+    
 # Implement deck class
 class Deck:
 
@@ -36,18 +39,14 @@ class Deck:
 
     def deal(self):
         
-        card_taken = self.cards.pop()
-
-        return card_taken
+        return self.cards.pop()
     
     def shuffle(self):
 
         random.shuffle(self.cards)
-
-    def __str__(self):
-
-        # Can be improved later, with ascii representation. 
-        return ', '.join(str(card) for card in self.cards)
+    
+    def __repr__(self):
+        return "Deck()"
 
 # Implement player hand
 class Player:
@@ -56,27 +55,35 @@ class Player:
 
         self.name = name # Player name
         self.hand = []
-        self.value = 0   
-        self.has_ace = 0 
     
-    def add_card(self, card):
+    def hit(self, card):
 
         self.hand.append(card)
         
-    def check_hand(self, hand):
+    def check_hand(self):
 
-        self.value = 0
-        # Iterate over hand
-        # Count value of cards
-        # Return hand value
-        for card in self.hand:
-            if card.value == 1:
-                self.has_ace += 1
-                self.value += 1
-            else:
-                self.value += card.value
-                
-        return self.value
+        values = [card.value for card in self.hand]
+        aces = values.count(1)
+        value = sum(values)
+
+        # Check for naturals
+        if len(values) == 2 and value == 21:
+            return 21
+        
+        # Bust (ace was counted as 1)
+        if value > 21:
+            return 0
+        
+        # Else, ask if ace should be 11 or 1?
+        return value, aces
+          
+    def __repr__(self):
+        return f"Player({self.name})"
+
+    def __str__(self):
+
+    # Can be improved later, with ascii representation. 
+        return ', '.join(str(card) for card in self.hand)
 
     
 deck1 = Deck()
