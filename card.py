@@ -63,16 +63,16 @@ class Deck:
             for rank in ranks:
                 self.cards.append(Card(suit, rank))    
 
-    def deal(self):
+    # def deal(self):
         
-        """"
-        Deal (remove and return) the top card from the stack.
+    #     """"
+    #     Deal (remove and return) the top card from the stack.
 
-        Returns:
-            Card: the card dealt from the stack.
-        """      
+    #     Returns:
+    #         Card: the card dealt from the stack.
+    #     """      
 
-        return self.cards.pop()
+    #     return self.cards.pop()
     
     def shuffle(self):
 
@@ -148,10 +148,26 @@ class Player:
     # Can be improved later, with ascii representation. 
         return ', '.join(str(card) for card in self.hand)
 
+class Dealer(Player):
     
-p1 = Player('Jon')
-p1.hit(Card('Spades', 1))
-p1.hit(Card('Diamonds', 1))
-p1.hit(Card('Jacks', 1))
-print(p1.check_hand())
+    """
+    Represent the dealer in blackjack.
+    Inherits from the Player class.
+    Takes no arguments, the name is automatically "Dealer".
+    """    
+
+    def __init__(self):
+        super().__init__("Dealer")
+
+    def deal(self, deck, player):
+        """
+        Deals a card from the deck to a player.
+
+        Args:
+            deck (Deck): The deck of cards.
+            player (Player): The player receiving the card.
+        """        
+
+        card = deck.cards.pop()
+        player.hit(card)
 
