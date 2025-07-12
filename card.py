@@ -103,11 +103,31 @@ class Player:
 
         self.name = name # Player name
         self.hand = []
+
+    
+    def choice(self):
+        
+        """
+        Asks the player whether to hit or stand.
+
+        Returns:
+            1 if the player hits,
+            0 if the player stands.
+        """
+
+        print("Hit or stand?")
+        while True:
+            player_choice = input("Enter h or s: ").lower()
+
+            if player_choice == 'h':
+                return 1
+            elif player_choice == 's':
+                return 0
     
     def hit(self, card):
         
         """
-        Represents a hit (asks the dealer for a card) in blackjack. 
+        Represents a hit in blackjack. 
 
         Args:
             card (Card): The card to add to the player's hand.
