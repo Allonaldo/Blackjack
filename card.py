@@ -140,7 +140,7 @@ class Player:
         Calculate the value of the cards held according to blackjack rules.
 
         Returns:
-            int: The value of the hand (0 if bust, 21 if blackjack)
+            int: The value of the hand (0 if bust, 21 if natural)
         """        
         values = [card.value for card in self.hand]
         value = sum(values)
