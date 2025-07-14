@@ -18,37 +18,68 @@ def play():
         players.append(Player(name))
 
     # Place bets
+    print("Place a bet from $2 to $500")
     for player in players:
         player.place_bet()
+
 
     # Deal 2 cards to each player
     for player in players:
         dealer.deal(deck, player)
         dealer.deal(deck, player)
+        print(player)
 
-    # Blackjack Loop
+    print("DEALER")
+    print(dealer)
+
+    # Check for blackjack/naturals
     for player in players:
-
         score = player.check_hand()
+        print(player)
         if score == 21:
-            dealer_first_card = dealer.hand[0]
-            if dealer_first_card == 1 or dealer_first_card == 10:
+            player.bet = 0
+            dealer_up = dealer.hand[0]
+
+            # Check if dealer's faceup card is Ace or 10
+            if dealer_up == 1 or dealer_up == 10:
                 if dealer.check_hand() == 21:
-                    dealer_natural = True
-                    # Return bet to player
-
+                    # Return wager
+                    dealer.pay(player)
                 else:
-                    dealer_natural = False
+                    dealer.pay(player,1.5)
 
-        # Serve the players
-        while 0 < score < 21:
-            if player.choice() == 0:
+
+    # Player turns
+    for player in players:
+        while 0 < player.check_hand() < 21:
+            # Player stands
+            if player.choice(dealer, deck) == 0:
                 break
 
-        # Dealer's play
-        dealer_score = dealer.check_hand()
-        while 0 < dealer_score < 17:
-            dealer.hit() 
+    # Dealer's turn
+    while 0 < dealer.check_hand() < 17:
+        dealer.deal(deck, dealer)
+
+    # Check results
+    dealer_score = dealer.check_hand()
+    for player in players:
+
+        # Dealer bust
+        if dealer_score == 0:
+            dealer.pay(player)
+
+        # Dealer wins
+        elif dealer_score > player.check_hand():
+            dealer.bank += player.bet
+
+        # Player wins
+        elif dealer_score < player.check_hand():
+            dealer.pay(player)
+        
+        # Tie
+        else:
+            player.bank += player.bet
+
                 
             
 

@@ -103,10 +103,9 @@ class Player:
         Sets self.bet to the valid amount.
         """        
 
-        print("Place a bet from $2 to $500")
         while True:
             try:
-                bet = int(input("Place your bet: $"))
+                bet = int(input(f"Place your bet, {self.name}: $"))
                 if 1 < bet < 501:
                     self.bet = bet
                     self.bank -= bet
@@ -130,8 +129,8 @@ class Player:
             0 if the player stands.
         """
 
-        print("Hit or stand?")
-        while True:
+        print(f"Would you like to hit or stand, {self.name}?")
+        while 0 < self.check_hand() < 21:
             player_choice = input("Enter h or s: ").lower()
 
             if player_choice == 'h':
@@ -159,20 +158,24 @@ class Player:
         """        
         values = [card.value for card in self.hand]
         value = sum(values)
-        has_ace = 1 in values
-        
+    
+    
+        if len(values) == 0:
+            return 0
+
         # Check for naturals
-        if len(values) == 2 and value == 21:
+        elif len(values) == 2 and value == 21:
             return 21
         
         # Bust
-        if value > 21:
+        elif value > 21:
             return 0
         
         # Handle ace
-        if value > 11:
+        elif value > 11:
             return value
-        elif has_ace:
+        # elif has_ace:
+        else:
             return value + 10
           
     def __repr__(self):
@@ -206,18 +209,19 @@ class Dealer(Player):
         card = deck.cards.pop()
         player.hit(card)
 
-    @staticmethod
-    def pay(player, multiplier=1):
+    def pay(self, player, multiplier=1):
 
         """
-        Dealer pays the player
+        Pays the amount owed times a multiplier. 
+        By default the bet is returned.
 
         Args:
             player (Player): The payee.
-            multiplier (float): The multiplyer by default is 1. Should be changed to 1.5 in 
-            certain cases.
+            multiplier (float): The multiplyer by default is 1. Should be changed to 1.5 in certain cases.
+
         """
 
-
-        player.bank += multiplier * player.bet
+        amount_paid = (multiplier + 1) * player.bet
+        self.bank -= amount_paid
+        player.bank += amount_paid
 
