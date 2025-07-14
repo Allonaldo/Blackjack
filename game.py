@@ -16,7 +16,10 @@ def play():
         if not name:
             break
         players.append(Player(name))
-    # players.append[dealer]
+
+    # Place bets
+    for player in players:
+        player.place_bet()
 
     # Deal 2 cards to each player
     for player in players:
@@ -24,7 +27,6 @@ def play():
         dealer.deal(deck, player)
 
     # Blackjack Loop
-
     for player in players:
 
         score = player.check_hand()

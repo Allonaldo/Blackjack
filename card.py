@@ -63,16 +63,6 @@ class Deck:
             for rank in ranks:
                 self.cards.append(Card(suit, rank))    
 
-    # def deal(self):
-        
-    #     """"
-    #     Deal (remove and return) the top card from the stack.
-
-    #     Returns:
-    #         Card: the card dealt from the stack.
-    #     """      
-
-    #     return self.cards.pop()
     
     def shuffle(self):
 
@@ -103,15 +93,40 @@ class Player:
 
         self.name = name # Player name
         self.hand = []
+        self.bet = 0
+        self.bank = 1000
+
+    def place_bet(self):
+
+        """
+        Prompts a player to place a bet.
+        Sets self.bet to the valid amount.
+        """        
+
+        print("Place a bet from $2 to $500")
+        while True:
+            try:
+                bet = int(input("Place your bet: $"))
+                if 1 < bet < 501:
+                    self.bet = bet
+                    self.bank -= bet
+                    break
+                else:
+                    print("Bet must be between $2 and $500.")
+            except ValueError:
+                print("Please enter a valid number.")
 
     
-    def choice(self):
+    def choice(self, dealer, deck):
         
         """
         Asks the player whether to hit or stand.
 
+        Args:
+            dealer (Dealer): The dealer object.
+            deck (Deck): The deck of cards currently in use.
+
         Returns:
-            1 if the player hits,
             0 if the player stands.
         """
 
@@ -120,7 +135,7 @@ class Player:
             player_choice = input("Enter h or s: ").lower()
 
             if player_choice == 'h':
-                return 1
+                dealer.deal(deck, self)
             elif player_choice == 's':
                 return 0
     
@@ -190,4 +205,19 @@ class Dealer(Player):
 
         card = deck.cards.pop()
         player.hit(card)
+
+    @staticmethod
+    def pay(player, multiplier=1):
+
+        """
+        Dealer pays the player
+
+        Args:
+            player (Player): The payee.
+            multiplier (float): The multiplyer by default is 1. Should be changed to 1.5 in 
+            certain cases.
+        """
+
+
+        player.bank += multiplier * player.bet
 
