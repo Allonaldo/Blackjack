@@ -1,5 +1,5 @@
 import unittest
-from card import Card, Deck, Player, Dealer
+from game_objects import Card, Deck, Player, Dealer
 
 class TestBlackjack(unittest.TestCase):
     def test_card_value(self):

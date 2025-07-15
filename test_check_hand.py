@@ -1,5 +1,5 @@
 import unittest
-from card import Card, Player
+from game_objects import Card, Player
 
 class TestCheckHand(unittest.TestCase):
     def test_blackjack(self):
