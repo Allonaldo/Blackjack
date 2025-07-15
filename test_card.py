@@ -15,13 +15,13 @@ class TestBlackjack(unittest.TestCase):
 
     def test_player_bet_and_bank(self):
         player = Player('Test')
-        player.bank = 100
+        player.funds = 100
         player.bet = 10
         dealer = Dealer()
-        dealer.bank = 1000
+        dealer.funds = 1000
         dealer.pay(player)
-        self.assertEqual(player.bank, 120)
-        self.assertEqual(dealer.bank, 980)
+        self.assertEqual(player.funds, 120)
+        self.assertEqual(dealer.funds, 980)
 
     def test_dealer_deal(self):
         deck = Deck()

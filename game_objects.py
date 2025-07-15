@@ -94,7 +94,7 @@ class Player:
         self.name = name # Player name
         self.hand = []
         self.bet = 0
-        self.bank = 1000
+        self.funds = 1000
 
     def place_bet(self):
 
@@ -108,7 +108,7 @@ class Player:
                 bet = int(input(f"Place your bet, {self.name}: $"))
                 if 1 < bet < 501:
                     self.bet = bet
-                    self.bank -= bet
+                    self.funds -= bet
                     break
                 else:
                     print("Bet must be between $2 and $500.")
@@ -138,15 +138,15 @@ class Player:
             elif player_choice == 's':
                 return 0
     
-    def hit(self, card):
+    # def hit(self, card):
         
-        """
-        Represents a hit in blackjack. 
+    #     """
+    #     Represents a hit in blackjack. 
 
-        Args:
-            card (Card): The card to add to the player's hand.
-        """
-        self.hand.append(card)
+    #     Args:
+    #         card (Card): The card to add to the player's hand.
+    #     """
+    #     self.hand.append(card)
         
     def check_hand(self):
         
@@ -207,7 +207,8 @@ class Dealer(Player):
         """        
 
         card = deck.cards.pop()
-        player.hit(card)
+        # player.hit(card)
+        player.hand.append(card)
 
     def pay(self, player, multiplier=1):
 
@@ -222,6 +223,6 @@ class Dealer(Player):
         """
 
         amount_paid = (multiplier + 1) * player.bet
-        self.bank -= amount_paid
-        player.bank += amount_paid
+        self.funds -= amount_paid
+        player.funds += amount_paid
 

@@ -1,4 +1,4 @@
-from card import Deck, Player, Dealer
+from game_objects import Deck, Player, Dealer
 
 
 def play():
@@ -70,7 +70,7 @@ def play():
 
         # Dealer wins
         elif dealer_score > player.check_hand():
-            dealer.bank += player.bet
+            dealer.funds += player.bet
 
         # Player wins
         elif dealer_score < player.check_hand():
