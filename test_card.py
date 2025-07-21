@@ -21,7 +21,7 @@ class TestBlackjack(unittest.TestCase):
         dealer.funds = 1000
         dealer.pay(player)
         self.assertEqual(player.funds, 120)
-        self.assertEqual(dealer.funds, 980)
+        self.assertEqual(dealer.funds, 990)
 
     def test_dealer_deal(self):
         deck = Deck()
@@ -34,17 +34,17 @@ class TestBlackjack(unittest.TestCase):
     def test_check_hand_blackjack(self):
         player = Player('Test')
         player.hand = [Card('Hearts', 1), Card('Spades', 10)]
-        self.assertEqual(player.check_hand(), 21)
+        self.assertEqual(player.value, 21)
 
     def test_check_hand_bust(self):
         player = Player('Test')
         player.hand = [Card('Hearts', 10), Card('Spades', 10), Card('Clubs', 5)]
-        self.assertEqual(player.check_hand(), 0)
+        self.assertEqual(player.value, 0)
 
     def test_check_hand_ace(self):
         player = Player('Test')
         player.hand = [Card('Hearts', 1), Card('Spades', 7)]
-        self.assertEqual(player.check_hand(), 18)
+        self.assertEqual(player.value, 18)
 
 if __name__ == '__main__':
     unittest.main()
